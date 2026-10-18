@@ -88,7 +88,6 @@ export function withNews<TBase extends AbstractConstructor<TwitterClientBase>>(
       const allItems: NewsItem[] = [];
       const seenHeadlines = new Set<string>();
 
-      // Fetch from each tab
       for (const tab of tabs) {
         const timelineId = TIMELINE_IDS[tab];
         if (!timelineId) {
@@ -98,7 +97,6 @@ export function withNews<TBase extends AbstractConstructor<TwitterClientBase>>(
         try {
           const tabItems = await this.fetchTimelineTab(tab, timelineId, count, aiOnly, includeRaw);
 
-          // Deduplicate across tabs
           for (const item of tabItems) {
             if (!seenHeadlines.has(item.headline)) {
               seenHeadlines.add(item.headline);
@@ -110,7 +108,6 @@ export function withNews<TBase extends AbstractConstructor<TwitterClientBase>>(
             console.error(`[getNews] Tab ${tab}: found ${tabItems.length} items, total unique: ${allItems.length}`);
           }
 
-          // Stop early if we have enough
           if (allItems.length >= count) {
             break;
           }
@@ -126,7 +123,6 @@ export function withNews<TBase extends AbstractConstructor<TwitterClientBase>>(
         return { success: false, error: 'No news items found' };
       }
 
-      // Limit to requested count
       const items = allItems.slice(0, count);
 
       if (withTweets) {
@@ -190,7 +186,6 @@ export function withNews<TBase extends AbstractConstructor<TwitterClientBase>>(
         throw new Error(data.errors.map((e) => e.message).join('; '));
       }
 
-      // Parse timeline response
       return this.parseTimelineTabItems(data, tabName, maxCount, aiOnly, includeRaw);
     }
 
@@ -208,7 +203,6 @@ export function withNews<TBase extends AbstractConstructor<TwitterClientBase>>(
       const items: NewsItem[] = [];
       const seenHeadlines = new Set<string>();
 
-      // Navigate to timeline instructions
       const timeline = data?.data?.timeline?.timeline;
       if (!timeline) {
         return [];
@@ -325,7 +319,6 @@ export function withNews<TBase extends AbstractConstructor<TwitterClientBase>>(
       let timeAgo: string | undefined;
       let category = 'Trending';
 
-      // Parse social context for metadata
       const socialCtx = itemContent?.social_context;
       if (socialCtx?.text) {
         const socialContextText = socialCtx.text;
@@ -356,7 +349,6 @@ export function withNews<TBase extends AbstractConstructor<TwitterClientBase>>(
         }
       }
 
-      // Parse trend metadata
       if (trendMetadata?.meta_description) {
         const metaDesc = trendMetadata.meta_description;
         const postMatch = metaDesc.match(POST_COUNT_MATCH_REGEX);

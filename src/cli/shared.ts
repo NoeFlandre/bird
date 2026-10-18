@@ -346,7 +346,6 @@ export function createCliContext(normalizedArgs: string[], env: NodeJS.ProcessEn
     for (const tweet of tweets) {
       console.log(`\n@${tweet.author.username} (${tweet.author.name}):`);
 
-      // Display tweet text, with article indicator if present
       if (tweet.article) {
         // Full body mode: text starts with article title (from extractArticleText)
         // Preview mode: text is short tweet intro that doesn't start with title
@@ -363,26 +362,22 @@ export function createCliContext(normalizedArgs: string[], env: NodeJS.ProcessEn
         console.log(tweet.text);
       }
 
-      // Display media attachments
       if (tweet.media && tweet.media.length > 0) {
         for (const m of tweet.media) {
           console.log(`${mediaLabel(m.type)} ${m.url}`);
         }
       }
 
-      // Display quoted tweet
       if (tweet.quotedTweet) {
         console.log(`${quotePrefix.top} QT @${tweet.quotedTweet.author.username}:`);
         const qtText = tweet.quotedTweet.article
           ? `${articleLabel} ${tweet.quotedTweet.article.title}`
           : tweet.quotedTweet.text;
-        // Indent and truncate quoted tweet text
         const maxLen = 280;
         const truncated = qtText.length > maxLen ? `${qtText.slice(0, maxLen)}...` : qtText;
         for (const line of truncated.split('\n').slice(0, 4)) {
           console.log(`${quotePrefix.mid}${line}`);
         }
-        // Display quoted tweet media
         if (tweet.quotedTweet.media && tweet.quotedTweet.media.length > 0) {
           for (const m of tweet.quotedTweet.media) {
             console.log(`${quotePrefix.mid}${mediaLabel(m.type)} ${m.url}`);

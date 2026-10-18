@@ -61,7 +61,6 @@ export function registerUserTweetsCommand(program: Command, ctx: CliContext): vo
         }
         const pageDelayMs = delayParsed.value;
 
-        // Validate inputs
         if (!Number.isFinite(count) || count <= 0) {
           console.error(`${ctx.p('err')}Invalid --count. Expected a positive integer.`);
           process.exit(2);
@@ -80,7 +79,6 @@ export function registerUserTweetsCommand(program: Command, ctx: CliContext): vo
           process.exit(2);
         }
 
-        // Normalize handle (strip @ if present)
         const username = normalizeHandle(handle);
         if (!username) {
           console.error(`${ctx.p('err')}Invalid handle: ${handle}`);
@@ -100,7 +98,6 @@ export function registerUserTweetsCommand(program: Command, ctx: CliContext): vo
 
         const client = new TwitterClient({ cookies, timeoutMs, quoteDepth });
 
-        // Look up user ID from username
         console.error(`${ctx.p('info')}Looking up @${username}...`);
         const userLookup = await client.getUserIdByUsername(username);
         if (!userLookup.success || !userLookup.userId) {
@@ -130,7 +127,6 @@ export function registerUserTweetsCommand(program: Command, ctx: CliContext): vo
             emptyMessage: `No tweets found for @${username}.`,
           });
 
-          // Show pagination hint if there's more
           if (result.nextCursor && !cmdOpts.json && !cmdOpts.jsonFull) {
             console.error(`${ctx.p('info')}More tweets available. Use --cursor "${result.nextCursor}" to continue.`);
           }

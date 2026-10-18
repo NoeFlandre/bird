@@ -110,7 +110,6 @@ export function registerReadCommands(program: Command, ctx: CliContext): void {
             emptyMessage: 'No replies found.',
           });
 
-          // Show pagination hint if there's more
           if (result.nextCursor && !isJson) {
             console.error(`${ctx.p('info')}More replies available. Use --cursor "${result.nextCursor}" to continue.`);
           }
@@ -187,7 +186,6 @@ export function registerReadCommands(program: Command, ctx: CliContext): void {
             emptyMessage: 'No thread tweets found.',
           });
 
-          // Show pagination hint if there's more
           if (result.nextCursor && !isJson) {
             console.error(
               `${ctx.p('info')}More thread tweets available. Use --cursor "${result.nextCursor}" to continue.`,
