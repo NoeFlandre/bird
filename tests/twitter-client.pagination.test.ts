@@ -142,7 +142,6 @@ describe('TwitterClient pagination for thread and replies', () => {
 
       expect(result.success).toBe(true);
       expect(result.tweets?.length).toBe(2);
-      // Verify cursor was passed in the request
       const url = mockFetch.mock.calls[0][0] as string;
       expect(url).toContain('resume-cursor');
     });

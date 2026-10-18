@@ -78,7 +78,6 @@ describe('TwitterClient lists pagination (continued)', () => {
     expect(result.tweets).toHaveLength(1);
     expect(result.tweets?.[0].id).toBe('tweet-resumed');
 
-    // Verify cursor was passed in the request
     const callUrl = (mockFetch.mock.calls[0] as [string])[0];
     expect(callUrl).toContain('resume-cursor');
   });

@@ -51,7 +51,6 @@ function printNewsItems(
       console.log(`  ${ctx.l('url')}${item.url}`);
     }
 
-    // Print related tweets if available
     if (item.tweets && item.tweets.length > 0) {
       console.log(`  ${ctx.colors.section('Related tweets:')}`);
       const tweetLimit = opts.tweetLimit ?? item.tweets.length;

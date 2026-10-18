@@ -414,7 +414,6 @@ describe('TwitterClient getUserTweetsPaged', () => {
     expect(result.success).toBe(true);
     expect(result.tweets?.[0].id).toBe('5');
 
-    // Verify cursor was passed in the request
     const [url] = mockFetch.mock.calls[0];
     expect(url).toContain('resume-cursor-xyz');
   });

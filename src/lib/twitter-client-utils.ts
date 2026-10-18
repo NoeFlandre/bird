@@ -159,7 +159,6 @@ export function renderContentState(contentState: ContentState | undefined): stri
 
     switch (block.type) {
       case 'unstyled': {
-        // Plain paragraph - just output text with any inline formatting
         const text = renderBlockText(block, entityMap);
         if (text) {
           outputLines.push(text);
@@ -226,7 +225,6 @@ export function renderContentState(contentState: ContentState | undefined): stri
       }
 
       default: {
-        // Fallback: just output the text
         const text = renderBlockText(block, entityMap);
         if (text) {
           outputLines.push(text);
@@ -478,7 +476,6 @@ export function extractMedia(result: GraphqlTweetResult | undefined): TweetMedia
       mediaItem.previewUrl = `${item.media_url_https}:small`;
     }
 
-    // Extract video URL for video/animated_gif
     if ((item.type === 'video' || item.type === 'animated_gif') && item.video_info?.variants) {
       // Prefer highest bitrate MP4, fall back to first MP4 when bitrate is missing.
       const mp4Variants = item.video_info.variants.filter(
